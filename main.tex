@@ -1,6 +1,5 @@
 % Template for LaTeX projects to streamline setting up new projects.
 % This template provides a basic structure for a document, including common packages and configurations.
-
 \documentclass[11pt, a4paper]{report} % Specifies the document class and options
 
 %% Packages
@@ -10,6 +9,7 @@
 \usepackage[T1]{fontenc}    % Allows the use of different font encodings.
 \usepackage{amsmath}        % Enhances math typesetting.
 \usepackage{graphicx}       % Provides interfaces for including graphics.
+\usepackage{xcolor}         % Provides color extensions.
 \usepackage[colorlinks,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}       % Provides hyperlinking abilities in PDF.
 \usepackage[english]{babel} % Sets the document language to English. Change to 'ngerman' for German.
 \usepackage{csquotes}       % Provides advanced facilities for inline and display quotations.
@@ -21,6 +21,9 @@
 \usepackage{minted}         % For syntax highlighting code
 \usepackage[backend=bibtex, style=ieee]{biblatex}
 \usepackage{soul}           % for highlighting text
+\usepackage{tikz}           % Required for drawing custom shapes
+\usepackage{pgfplots}       % Required for plotting graphs
+\usepackage{svg}            % Required for including SVG images
 % Add more packages here as needed.
 
 %% Page Layout
@@ -45,6 +48,7 @@
 
 % Create a todo command to highlight unfinished sections.
 \newcommand{\todo}[1]{\textcolor{red}{\hl{\textbf{TODO:} #1}}\PackageWarning{TODO:}{#1!}} 
+
 
 % Remove indentation from paragraphs.
 \setlength{\parindent}{0cm}
@@ -76,7 +80,36 @@
 %% Document
 \begin{document}
 
-\maketitle  % Generates the title.
+% Title Page
+% Title Page
+\begin{titlepage}
+  \centering
+  \vspace*{1cm} % Vertical space at the top of the page
+
+  \includegraphics[width=0.4\textwidth]{assets/logo.png} % Simply replace 'logo.png' with your logo file.
+  \vspace{1.5cm}
+
+  \textbf{\Huge \thetitle}
+  \vspace{1.5cm}
+
+  \textbf{\Large Subtitle or Tagline} % Change this to your subtitle or tagline.
+  \vspace{2cm}
+
+  \textbf{\Large \theauthor}
+  \vfill
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0pt, anchor=south] at ([yshift=6cm]current page.south) {
+      \includesvg[width=\paperwidth]{assets/title-background.svg} % Replace 'title-background.svg' with your own SVG file to customize the background. 
+    };
+  \end{tikzpicture}
+
+  % Additional details
+  \Large Department Name\\
+  \Large University Name\\
+  \vspace{0.8cm}
+  \Large \today
+\end{titlepage}
 
 \newpage
 
