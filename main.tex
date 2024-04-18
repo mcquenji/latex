@@ -19,16 +19,16 @@
 \usepackage{titling}
 \usepackage{lastpage}       % Allows referencing the last page of the document.
 \usepackage{minted}         % For syntax highlighting code
-\usepackage[backend=bibtex, style=ieee]{biblatex}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
 \usepackage{soul}           % for highlighting text
 \usepackage{tikz}           % Required for drawing custom shapes
 \usepackage{pgfplots}       % Required for plotting graphs
 \usepackage{svg}            % Required for including SVG images
+\usepackage[toc]{glossaries}% For creating glossaries
 % Add more packages here as needed.
 
 %% Page Layout
 % Adjust the page dimensions and margins.
-
 \usepackage{geometry}
 \geometry{
   top=2.5cm,
@@ -47,7 +47,7 @@
 \renewcommand{\enquote}[1]{\textit{\oldenquote{#1}}}
 
 % Create a todo command to highlight unfinished sections.
-\newcommand{\todo}[1]{\textcolor{red}{\hl{\textbf{TODO:} #1}}\PackageWarning{TODO:}{#1!}} 
+\newcommand{\todo}[1]{\textcolor{red}{\hl{\textbf{TODO:} #1}}\PackageWarning{TODO}{#1!}} 
 
 
 % Remove indentation from paragraphs.
@@ -72,10 +72,20 @@
 
 \fancyfoot[L]{\theauthor}
 \fancyfoot[C]{}
-\fancyfoot[R]{\thepage/\pageref{LastPage}}
+\fancyfoot[R]{%
+  \iflanguage{ngerman}{%
+    Seite \thepage\ von \pageref*{LastPage}%
+  }{%
+    Page \thepage\ of \pageref*{LastPage}%
+  }
+}
 
 \renewcommand{\headrulewidth}{0.4pt} % Adds a header rule line.
 \renewcommand{\footrulewidth}{0.4pt} % Adds a footer rule line.
+
+% Load glossary entries from glossary.tex
+\makeglossaries
+\input{glossary.tex}
 
 %% Document
 \begin{document}
@@ -122,6 +132,8 @@
 % Add more chapters here by adding \input{chapters/chapter_name.tex}
 \input{chapters/conclusion.tex}
 
-\printbibliography % Prints the bibliography. This only prints the references that are cited in the document. If no references are cited, this will not print anything.
+\printglossaries % Prints the glossary. This will only print the glossary if glossary entries are defined and used in glossary.tex.
+\glsaddall
+\printbibliography[heading=bibintoc]{} % Prints the bibliography. This only prints the references that are cited in the document. If no references are cited, this will not print anything.
 
 \end{document}

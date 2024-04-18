@@ -57,7 +57,7 @@ It is recommended to use a reference manager like JabRef to manage your referenc
 \section{Including Graphics}
 To include graphics, use the \textbackslash includegraphics command from the `graphicx` package and wrap it inside a figure environment. Example:
 \begin{minted}{TeX}
-\begin{figure}[h]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{assets/your-image.png}
     \caption{This is a caption.}
@@ -74,3 +74,38 @@ Automatically reference figures, tables, or code listings using \textbackslash a
 \label{fig:example}
 As shown in \autoref{fig:example}, this figure demonstrates...
 \end{minted}
+
+\section{Glossary Entries and Acronyms}
+
+To add a glossary entry, use the \texttt{\textbackslash newglossaryentry} command in the \texttt{glossary.tex} file. Here is an example:
+
+\begin{minted}{TeX}
+\newglossaryentry{api}{
+    name={API},
+    first={Application Programming Interface (API)},
+    plural={APIs},
+    description={Application Programming Interface}
+}
+\end{minted}
+
+To reference the glossary entry in your document, use the \texttt{\textbackslash gls} command. For example:
+
+\begin{minted}{TeX}
+The \gls{api} provides a set of functions...
+\end{minted}
+
+You can also use the \texttt{\textbackslash glspl} command to make the first use of the term plural. For example:
+
+\begin{minted}{TeX}
+\glspl{api} are used to...
+\end{minted}
+
+\section{Noting To-Do Items}
+
+To mark a to-do item in your document, use the \texttt{\textbackslash todo} command. For example:
+
+\begin{minted}{TeX}
+\todo{Add more details here}
+\end{minted}
+
+This will also throw a warning in the document, making it easier to spot and address later.
