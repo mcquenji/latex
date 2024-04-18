@@ -1,0 +1,24 @@
+{
+    "Code Listing":{
+        "prefix": [
+            "code",
+            "snippet"
+        ],
+        "body": [
+            "\\begin{minted}{${1:language}}",
+            "${2:code}",
+            "\\end{minted}",
+        ],
+    },
+    "Figure":{
+        "prefix": "img",
+        "body": [
+            "\\begin{figure}[htp]",
+            "\\centering",
+            "\\includegraphics[width=0.5\\textwidth]{assets/${2:figure}}",
+            "\\caption{${3:caption}}",
+            "\\label{fig:${4:label}}",
+            "\\end{figure}"
+        ],
+    },
+}

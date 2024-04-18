@@ -1,0 +1,78 @@
+%!TEX root=../main.tex
+
+\chapter{How to use this template}
+This chapter provides guidelines on how to effectively use this \texttt{LaTeX} template for your documents. It covers adding new chapters, inserting code samples, citing references, including graphics, and using automated cross-references.
+
+\newpage
+
+\section{Adding New Chapters}
+To add a new chapter to your document, create a new \texttt{LaTeX} file in the chapters directory and include it in the main document using the \mintinline{latex}|\input{chapters/your-chapter.tex}| command. Here is an example of a new chapter file:
+
+\begin{minted}{TeX}
+\chapter{Chapter Title}
+Explanation of the chapter content goes here.
+
+\newpage
+
+\section{Section Title}
+You can add sections within the chapter as well.
+\end{minted}
+
+\section{Adding Code Samples}
+To include code samples in your document, use the `minted` environment. This environment provides robust syntax highlighting and is especially useful for displaying source code. Here is an example:
+
+\begin{verbatim}
+\begin{minted}{c}
+    #include <stdio.h>
+    int main() {
+        printf("Hello, World!");
+        return 0;
+    }
+\end{minted}
+\end{verbatim}
+
+\textbf{Note:} If you are using VS Code, you can make use of a snippet to quickly insert these environments by typing \texttt{code} or \texttt{snippet}.
+
+\section{Citing References and Direct Quotes}
+Direct quotes in your text must be enclosed using \textbackslash enquote{}. Citations should be placed immediately after the punctuation that ends the sentence containing the quoted material. Here is how to properly cite and quote:
+\begin{minted}{TeX}
+This is a referenced sentence.\cite{RefLabel}
+\enquote{This is a direct quote.}\cite{RefLabel}
+\end{minted}
+
+\section{Adding References}
+Your references should be stored in the \texttt{references.bib} file. Each reference should have a unique label that you can use to cite it in your document. Here is an example of a reference entry:
+\begin{minted}{bibtex}
+@Online{RefLabel,
+    author = {Author Name},
+    title = {Title of the Article},
+    year = {2021},
+    url = {https://www.example.com},
+    urldate = {2021-01-01}
+}
+\end{minted}
+
+It is recommended to use a reference manager like JabRef to manage your references.
+
+\section{Including Graphics}
+To include graphics, use the \textbackslash includegraphics command from the `graphicx` package and wrap it inside a figure environment. Example:
+\begin{minted}{TeX}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{assets/your-image.png}
+    \caption{This is a caption.}
+    \label{fig:example}
+\end{figure}
+\end{minted}
+
+\textbf{Note:} If you are using VS Code, you can make use of a snippet to quickly insert these environments by typing \texttt{img}.
+
+
+\section{Referencing Figures and Listings}
+Automatically reference figures, tables, or code listings using \textbackslash autoref. Label your items and reference them as shown:
+\begin{minted}{TeX}
+\label{fig:example}
+As shown in \autoref{fig:example}, this figure demonstrates...
+\end{minted}
+
+\end{document}

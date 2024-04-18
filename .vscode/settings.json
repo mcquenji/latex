@@ -1,0 +1,67 @@
+{
+    // copied from: https://leportella.com/minted-vscode/
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.aux": true,
+        "**/*.bbl": true,
+        "**/*.blg": true,
+        "**/*.acn": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.glo": true,
+        "**/*.out": true,
+        "**/*.toc": true,
+        "**/*.xdy": true,
+        "**/*.fls": true,
+        "**/*.acr": true,
+        "**/*.alg": true,
+        "**/*.gls": true,
+        "**/*.glg": true,
+        "**/*.lol": true,
+        "**/*.pyg": true,
+        "**/*.dvi": true,
+        "**/*.ps": true,
+        "**/*.run.xml": true,
+        "**/*-blx.bib": true,
+        "**/*.log": true,
+        "_minted-*": true,
+        "main.synctex.gz": true,
+        "__**.tex": true
+    }
+}

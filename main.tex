@@ -1,0 +1,94 @@
+% Template for LaTeX projects to streamline setting up new projects.
+% This template provides a basic structure for a document, including common packages and configurations.
+
+\documentclass[11pt, a4paper]{report} % Specifies the document class and options
+
+%% Packages
+% Load packages to extend the functionality of LaTeX.
+
+\usepackage[utf8]{inputenc} % Allows input encoding of international characters.
+\usepackage[T1]{fontenc}    % Allows the use of different font encodings.
+\usepackage{amsmath}        % Enhances math typesetting.
+\usepackage{graphicx}       % Provides interfaces for including graphics.
+\usepackage[colorlinks,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}       % Provides hyperlinking abilities in PDF.
+\usepackage[english]{babel} % Sets the document language to English. Change to 'ngerman' for German.
+\usepackage{csquotes}       % Provides advanced facilities for inline and display quotations.
+\usepackage{parskip}        % Adds spacing between paragraphs.
+\usepackage{fancyhdr}       % Customizes headers and footers.
+\usepackage{bookmark}
+\usepackage{titling}
+\usepackage{lastpage}       % Allows referencing the last page of the document.
+\usepackage{minted}         % For syntax highlighting code
+\usepackage[backend=bibtex, style=ieee]{biblatex}
+\usepackage{soul}           % for highlighting text
+% Add more packages here as needed.
+
+%% Page Layout
+% Adjust the page dimensions and margins.
+
+\usepackage{geometry}
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+}
+
+% Make citations superscript as seen in wikipedia articles.
+\let\origcite\cite
+\renewcommand{\cite}[1]{\textsuperscript{\origcite{#1}}} 
+
+% Make quotes italicized.
+\let\oldenquote\enquote
+\let\endoldquote\endquote
+\renewcommand{\enquote}[1]{\textit{\oldenquote{#1}}}
+
+% Create a todo command to highlight unfinished sections.
+\newcommand{\todo}[1]{\textcolor{red}{\hl{\textbf{TODO:} #1}}\PackageWarning{TODO:}{#1!}} 
+
+% Remove indentation from paragraphs.
+\setlength{\parindent}{0cm}
+
+%% Bibliography
+\bibliography{references} % References are managed in the references.bib file.
+
+%% Title and Author
+% Define the title, author, and date for the document.
+
+\title{Document Title} % The title
+\author{Author Name}  % The author
+\date{\today}         % Sets date to current date.
+
+%% Header and Footer
+\pagestyle{fancy}
+
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[C]{}
+\fancyhead[R]{\thetitle}
+
+\fancyfoot[L]{\theauthor}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage/\pageref{LastPage}}
+
+\renewcommand{\headrulewidth}{0.4pt} % Adds a header rule line.
+\renewcommand{\footrulewidth}{0.4pt} % Adds a footer rule line.
+
+%% Document
+\begin{document}
+
+\maketitle  % Generates the title.
+
+\newpage
+
+\tableofcontents % Generates a table of contents based on the document's structure.
+
+\newpage
+
+\input{chapters/abstract.tex}
+\input{chapters/how-to.tex} % Remove this line after adding your own content.
+% Add more chapters here by adding \input{chapters/chapter_name.tex}
+\input{chapters/conclusion.tex}
+
+\printbibliography % Prints the bibliography. This only prints the references that are cited in the document. If no references are cited, this will not print anything.
+
+\end{document}
