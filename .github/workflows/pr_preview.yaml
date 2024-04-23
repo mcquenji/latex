@@ -12,7 +12,7 @@ jobs:
       FAIL_ON_WARNING: "true"  # Set this to 'false' to not fail the build on warnings
 
     steps:
-      -  uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set outputs
         id: vars
@@ -23,9 +23,27 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Get hash of workflow file
+        id: workflow-hash
+        run: echo "::set-output name=hash::$(sha256sum .github/workflows/this_workflow.yml | awk '{ print $1 }')"
+
+      - name: Cache LaTeX packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/share/texmf
+            /usr/share/texlive
+          key: ${{ runner.os }}-texlive-${{ steps.workflow-hash.outputs.hash }}
+          restore-keys: |
+            ${{ runner.os }}-texlive-
+
       - name: Install LaTeX
-        run: sudo apt-get install texlive-full texlive-xetex texlive-latex-extra texlive-bibtex-extra
-      
+        run: |
+          if ! command -v pdflatex &> /dev/null
+          then
+            sudo apt-get install texlive-full texlive-xetex texlive-latex-extra texlive-bibtex-extra
+          fi
+
       - name: Install pygments
         uses: BSFishy/pip-action@v1
         with:
