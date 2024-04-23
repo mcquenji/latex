@@ -12,8 +12,11 @@ jobs:
       FAIL_ON_WARNING: "true"  # Set this to 'false' to not fail the build on warnings
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Set outputs
+        id: vars
+        run: echo "artifact_name=preview#${{ github.event.pull_request.number }}.$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      -  uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -29,7 +32,7 @@ jobs:
           packages: pygments
 
       - name: Install inkscape
-        run: apk add inkscape
+        run: sudo apt-get install inkscape
 
       - name: Compile LaTeX document
         run: |
@@ -43,7 +46,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v2
         with:
-          name: pr-preview
+          name: ${{ steps.vars.outputs.artifact_name }}
           path: main.pdf
 
       - name: Generate comment
@@ -53,7 +56,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body-path: comment_body.md
+          body-path: comment_body.md ${{ steps.vars.outputs.artifact_name }}
 
       - name: Check for fail conditions
         run: python check_fail.py
