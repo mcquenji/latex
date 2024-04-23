@@ -6,9 +6,7 @@ def main():
     errors = []
     warnings = []
 
-    REPO = sys.argv[1]
-    RUN_ID = sys.argv[2]
-    ARTIFACT_NAME = sys.argv[3]
+    DOWNLOAD_URL = sys.argv[1]
 
     with open("main.log", "r") as file:
         for line in file:
@@ -35,7 +33,7 @@ def main():
         comment_body += "No critical issues found.\n"
 
     if os.path.exists("main.pdf"):
-        comment_body += f"[Download the compiled PDF](https://github.com/{REPO}/actions/artifacts/{RUN_ID}?artifactName={ARTIFACT_NAME})\n"
+        comment_body += f"[Download the compiled PDF]({DOWNLOAD_URL})\n"
 
     with open("comment_body.md", "w") as file:
         file.write(comment_body)

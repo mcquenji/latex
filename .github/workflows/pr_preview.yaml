@@ -44,13 +44,14 @@ jobs:
 
       - name: Upload PDF if build is successful
         if: success()
-        uses: actions/upload-artifact@v2
+        id: upload
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: ${{ steps.vars.outputs.artifact_name }}
           path: main.pdf
 
       - name: Generate comment
-        run: python .github/workflows/generate_comment.py ${{ github.repository }} ${{ github.run_id }} ${{ steps.vars.outputs.artifact_name }} 
+        run: python .github/workflows/generate_comment.py ${{ steps.upload.outputs.artifact-url }}
 
       - name: Post comment on PR
         uses: peter-evans/create-or-update-comment@v3.1.0
@@ -59,4 +60,4 @@ jobs:
           body-path: comment_body.md
 
       - name: Check for fail conditions
-        run: python .github/workflows/check_fail.py
+        run: python .github/workflows/check_logs.py
