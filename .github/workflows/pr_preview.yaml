@@ -50,7 +50,7 @@ jobs:
           path: main.pdf
 
       - name: Generate comment
-        run: python generate_comment.py
+        run: python .github/workflows/generate_comment.py
 
       - name: Post comment on PR
         uses: peter-evans/create-or-update-comment@v3.1.0
@@ -59,4 +59,4 @@ jobs:
           body-path: comment_body.md ${{ steps.vars.outputs.artifact_name }}
 
       - name: Check for fail conditions
-        run: python check_fail.py
+        run: python .github/workflows/check_fail.py
