@@ -50,13 +50,13 @@ jobs:
           path: main.pdf
 
       - name: Generate comment
-        run: python .github/workflows/generate_comment.py
+        run: python .github/workflows/generate_comment.py ${{ steps.vars.outputs.artifact_name }}
 
       - name: Post comment on PR
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body-path: comment_body.md ${{ steps.vars.outputs.artifact_name }}
+          body-path: comment_body.md
 
       - name: Check for fail conditions
         run: python .github/workflows/check_fail.py
