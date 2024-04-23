@@ -1,0 +1,59 @@
+name: PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      FAIL_ON_WARNING: "true"  # Set this to 'false' to not fail the build on warnings
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install LaTeX
+        run: sudo apt-get install texlive-full texlive-xetex texlive-latex-extra texlive-bibtex-extra
+      
+      - name: Install pygments
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: pygments
+
+      - name: Install inkscape
+        run: apk add inkscape
+
+      - name: Compile LaTeX document
+        run: |
+          pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+          makeglossaries main
+          pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+        continue-on-error: true
+
+      - name: Upload PDF if build is successful
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: pr-preview
+          path: main.pdf
+
+      - name: Generate comment
+        run: python generate_comment.py
+
+      - name: Post comment on PR
+        uses: peter-evans/create-or-update-comment@v3.1.0
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: comment_body.md
+
+      - name: Check for fail conditions
+        run: python check_fail.py
