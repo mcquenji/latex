@@ -50,7 +50,7 @@ jobs:
           path: main.pdf
 
       - name: Generate comment
-        run: python .github/workflows/generate_comment.py ${{ steps.vars.outputs.artifact_name }}
+        run: python .github/workflows/generate_comment.py ${{ github.repository }} ${{ github.run_id }} ${{ steps.vars.outputs.artifact_name }} 
 
       - name: Post comment on PR
         uses: peter-evans/create-or-update-comment@v3.1.0
