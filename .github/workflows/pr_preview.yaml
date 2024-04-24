@@ -8,6 +8,7 @@ jobs:
   build:
     name: Build Preview
     runs-on: ubuntu-latest
+    container: laurenss/texlive-full
 
     env:
       FAIL_ON_WARNING: "true"  # Set this to 'false' to not fail the build on warnings
@@ -15,35 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Generate Artifact Name
+      - name: Setup Variables
         id: vars
-        run: echo "artifact_name=preview#${{ github.event.pull_request.number }}.$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: |
+          echo "artifact-name=preview#${{ github.event.pull_request.number }}.$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
-      - name: Get hash of workflow file
-        id: workflow-hash
-        run: echo "::set-output name=hash::$(sha256sum .github/workflows/this_workflow.yml | awk '{ print $1 }')"
-
-      - name: Cache LaTeX packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            /usr/local/share/texmf
-            /usr/share/texlive
-          key: ${{ runner.os }}-texlive-${{ steps.workflow-hash.outputs.hash }}
-          restore-keys: |
-            ${{ runner.os }}-texlive-
-
-      - name: Install LaTeX
-        run: |
-          if ! command -v pdflatex &> /dev/null
-          then
-            sudo apt-get install texlive-full texlive-xetex texlive-latex-extra texlive-bibtex-extra
-          fi
 
       - name: Install pygments
         uses: BSFishy/pip-action@v1
@@ -67,14 +48,11 @@ jobs:
         if: ${{ steps.compile.outcome == 'success' }}
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: ${{ steps.vars.outputs.artifact_name }}
+          name: ${{ steps.vars.outputs.artifact-name }}
           path: |
             main.pdf
             *.log
             *.aux
-
-      - name: Generate Report
-        run: python .github/workflows/generate_comment.py ${{ steps.pdf-upload.outputs.artifact-url }}
 
       - name: Generate Report
         run: python .github/workflows/generate_comment.py ${{ steps.pdf-upload.outputs.artifact-url }}
