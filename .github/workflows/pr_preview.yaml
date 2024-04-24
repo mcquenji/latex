@@ -21,14 +21,10 @@ jobs:
         run: |
           echo "artifact-name=preview#${{ github.event.pull_request.number }}.$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
       - name: Install Dependencies
         run: |
-          pip install pygments
+          sudo apt-get install python3-pip
+          pip3 install pygments
           sudo apt-get install inkscape
 
       - name: Compile Document
