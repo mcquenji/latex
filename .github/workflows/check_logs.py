@@ -5,7 +5,11 @@ import re
 
 def load_whitelist() -> list[str]:
     with open(".github/workflows/ignore.conf", "r") as file:
-        return [line.strip() for line in file if not line.startswith("#")]
+        return [
+            line.strip()
+            for line in file
+            if not line.startswith("#") and line.strip() != ""
+        ]
 
 
 def is_whitelisted(line: str, whitelist: list[str]) -> bool:

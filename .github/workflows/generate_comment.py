@@ -5,7 +5,11 @@ import re
 
 def load_whitelist() -> list[str]:
     with open(".github/workflows/ignore.conf", "r") as file:
-        return [line.strip() for line in file if not line.startswith("#")]
+        return [
+            line.strip()
+            for line in file
+            if not line.startswith("#") and line.strip() != ""
+        ]
 
 
 def is_whitelisted(line: str, whitelist: list[str]) -> bool:
@@ -58,7 +62,7 @@ def main():
                 + "\n```\n</details>\n"
             )
     else:
-        comment_body += "No critical issues found.\n"
+        comment_body += "*No critical issues found.*\n"
 
     if whitelisted:
         comment_body += (
@@ -72,9 +76,7 @@ def main():
     if os.path.exists("main.pdf"):
         comment_body += f"[Download Preview]({DOWNLOAD_URL})\n"
     else:
-        comment_body += (
-            f"Preview could not be compiled. [Download logs]({DOWNLOAD_URL})\n"
-        )
+        comment_body += f"*No preview was compiled.* <u>[Download logs instead]({DOWNLOAD_URL})</u>\n"
 
     with open("comment_body.md", "w") as file:
         file.write(comment_body)
