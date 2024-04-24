@@ -12,33 +12,30 @@
 \usepackage{xcolor}         % Provides color extensions.
 \usepackage[colorlinks,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}       % Provides hyperlinking abilities in PDF.
 \usepackage[english]{babel} % Sets the document language to English. Change to 'ngerman' for German.
+\usepackage{csquotes}       % Provides advanced facilities for inline and display quotations.
 \usepackage{parskip}        % Adds spacing between paragraphs.
 \usepackage{fancyhdr}       % Customizes headers and footers.
 \usepackage{bookmark}
 \usepackage{titling}
 \usepackage{lastpage}       % Allows referencing the last page of the document.
 \usepackage{minted}         % For syntax highlighting code
-\usepackage[backend=biber,style=ieee]{biblatex}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
 \usepackage{soul}           % for highlighting text
 \usepackage{tikz}           % Required for drawing custom shapes
 \usepackage{pgfplots}       % Required for plotting graphs
 \usepackage{svg}            % Required for including SVG images
 \usepackage[toc]{glossaries}% For creating glossaries
-\usepackage{geometry}
-\usepackage{csquotes}       % Provides advanced facilities for inline and display quotations.
 % Add more packages here as needed.
 
 %% Page Layout
 % Adjust the page dimensions and margins.
+\usepackage{geometry}
 \geometry{
   top=2.5cm,
   bottom=2.5cm,
   left=2.5cm,
   right=2.5cm
 }
-
-\setlength{\headheight}{13.59999pt}
-\pgfplotsset{compat=1.18} 
 
 % Make citations superscript as seen in wikipedia articles.
 \let\origcite\cite
@@ -94,7 +91,7 @@
 \begin{document}
 
 % Title Page
-\hypersetup{pageanchor=false}
+% Title Page
 \begin{titlepage}
   \centering
   \vspace*{1cm} % Vertical space at the top of the page
@@ -123,7 +120,6 @@
   \vspace{0.8cm}
   \Large \today
 \end{titlepage}
-\hypersetup{pageanchor=true}
 
 \newpage
 
