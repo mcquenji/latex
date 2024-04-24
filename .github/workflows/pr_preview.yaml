@@ -50,7 +50,7 @@ jobs:
             *.aux
 
       - name: Generate Report
-        run: python .github/workflows/generate_comment.py ${{ steps.pdf-upload.outputs.artifact-url }}
+        run: python3 .github/workflows/generate_comment.py ${{ steps.pdf-upload.outputs.artifact-url }}
 
       - name: Publish Report
         uses: peter-evans/create-or-update-comment@v3.1.0
@@ -59,4 +59,4 @@ jobs:
           body-path: comment_body.md
 
       - name: Analyze Logs
-        run: python .github/workflows/check_logs.py
+        run: python3 .github/workflows/check_logs.py
