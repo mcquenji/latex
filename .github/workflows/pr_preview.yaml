@@ -26,13 +26,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install pygments
-        uses: BSFishy/pip-action@v1
-        with:
-          packages: pygments
-
-      - name: Install inkscape
-        run: sudo apt-get install inkscape
+      - name: Install Dependencies
+        run: |
+          pip install pygments
+          sudo apt-get install inkscape
 
       - name: Compile Document
         id: compile
