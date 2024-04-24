@@ -43,29 +43,31 @@ def main():
                 else:
                     errors.append(line)
 
-    comment_body = "Build results:\n"
+    comment_body = "# Build results\n"
     if errors or warnings:
         if errors:
             comment_body += (
-                "<details><summary>Errors</summary>\n\n```\n"
+                "<details><summary><b>Errors</b></summary>\n\n```\n"
                 + "\n".join(errors)
                 + "\n```\n</details>\n"
             )
         if warnings:
             comment_body += (
-                "<details><summary>Warnings</summary>\n\n```\n"
+                "<details><summary><b>Warnings</b></summary>\n\n```\n"
                 + "\n".join(warnings)
-                + "\n```\n</details>\n\n"
+                + "\n```\n</details>\n"
             )
     else:
         comment_body += "No critical issues found.\n"
 
     if whitelisted:
         comment_body += (
-            "<details><summary>Suppressed errors & warnings</summary>\n\n```\n"
+            "<details><summary><b>Suppressed errors & warnings</b></summary>\n\n```\n"
             + "\n".join(whitelisted)
             + "\n```\n</details>\n"
         )
+
+    comment_body += "\n\n"
 
     if os.path.exists("main.pdf"):
         comment_body += f"[Download Preview]({DOWNLOAD_URL})\n"
