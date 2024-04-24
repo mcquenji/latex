@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build:
+  Build-Preview:
     runs-on: ubuntu-latest
 
     env:
