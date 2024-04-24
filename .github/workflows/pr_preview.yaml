@@ -28,6 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           apt-get -y update
+          apt-get install -y libc6
           apt-get install -y python3-pip
           pip3 install pygments
           apt-get install -y inkscape
