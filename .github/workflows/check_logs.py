@@ -23,9 +23,9 @@ def main():
         for line in file:
             found_error = False
 
-            if "error: " in line.lower():
+            if "error " in line.lower():
                 found_error = True
-            if "warning: " in line.lower() and fail_on_warning:
+            if "warning " in line.lower() and fail_on_warning:
                 found_error = True
 
             if found_error and not is_whitelisted(line, WHITELIST):

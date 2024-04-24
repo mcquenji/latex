@@ -29,9 +29,9 @@ def main():
             found_error = False
             is_warning = False
 
-            if "error: " in line.lower():
+            if "error " in line.lower():
                 found_error = True
-            elif "warning: " in line.lower():
+            elif "warning " in line.lower():
                 found_error = True
                 is_warning = True
 
@@ -68,7 +68,11 @@ def main():
         )
 
     if os.path.exists("main.pdf"):
-        comment_body += f"[Download the compiled PDF]({DOWNLOAD_URL})\n"
+        comment_body += f"[Download Preview]({DOWNLOAD_URL})\n"
+    else:
+        comment_body += (
+            f"Preview could not be compiled. [Download logs]({DOWNLOAD_URL})\n"
+        )
 
     with open("comment_body.md", "w") as file:
         file.write(comment_body)
