@@ -12,10 +12,12 @@ jobs:
         container: mcquenji/texlive
 
         env:
-            PDF_NAME: "${{github.repository_owner}} ${{ github.event.repository.name}}" # The name of the compiled PDF file (without the .pdf extension) when a release is created
+            PDF_NAME: "${{github.repository_owner}} ${{ github.event.repository.name}}" # The name of the compiled PDF file (without the .pdf extension) when a release is created. Change to your heart's content.
 
         steps:
             - uses: actions/checkout@v3
+
+            - run: git config --global --add safe.directory '*'
 
             - name: Compile Document
               id: compile
@@ -33,7 +35,7 @@ jobs:
                 tag_template: dd.mm.yy.i 
 
             - name: Rename PDF
-              run: mv main.pdf "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
+              run: mv main.pdf "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
 
             - name: Generate Change Log
               uses: mikepenz/release-changelog-builder-action@v4
@@ -50,4 +52,4 @@ jobs:
                 name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
                 body: ${{ steps.changelog.outputs.changelog}}
                 artifacts: |
-                  "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
+                  "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
