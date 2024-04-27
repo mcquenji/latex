@@ -16,6 +16,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v3
+              with:
+                fetch-depth: 0
 
             - run: git config --global --add safe.directory '*'
 
@@ -42,6 +44,7 @@ jobs:
               id: changelog
               with:
                 configuration: .github/workflows/changelog.json
+                toTag: ${{ github.sha}}
 
             - name: Create Release
               uses: ncipollo/release-action@v1.14.0
