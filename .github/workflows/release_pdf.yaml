@@ -21,8 +21,6 @@ jobs:
 
             - run: git config --global --add safe.directory '*'
 
-            - run: git config --global --add safe.directory '*'
-
             - name: Compile Document
               id: compile
               run: |
