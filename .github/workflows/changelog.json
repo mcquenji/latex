@@ -1,0 +1,37 @@
+{
+    "categories": [
+        {
+            "title": "## 📖 Chapters Added",
+            "labels": [
+                "chapter"
+            ]
+        },
+        {
+            "title": "## 🐛 Typos and Grammar",
+            "labels": [
+                "typo",
+                "grammar"
+            ]
+        },
+        {
+            "title": "## 🐞 Bug Fixes",
+            "labels": [
+                "bug",
+                "fix"
+            ]
+        },
+        {
+            "title": "## 🚀 Enhancements",
+            "labels": [
+                "enhancement"
+            ]
+        }
+    ],
+    "sort": "ASC",
+    "template": "# \n- #{{ADDITIONS}} lines added\n- #{{DELETIONS}} lines removed\n- #{{CHANGES}} total lines changed\n- #{{CHANGED_FILES}} files changed\n- #{{COMMITS}} commits\n- #{{OPEN_COUNT}} open pull requests\n\n${{CHANGELOG}}\n\n<details>\n<summary><b>Uncategorized</b></summary>\n\n${{UNCATEGORIZED}} (#{{UNCATEGORIZED_COUNT}})\n</details>\n\n\n[View full diff](#{{RELEASE_DIFF}})",
+    "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}",
+    "empty_template": "- no changes",
+    "max_tags_to_fetch": 200,
+    "max_pull_requests": 200,
+    "max_back_track_time_days": 90
+}

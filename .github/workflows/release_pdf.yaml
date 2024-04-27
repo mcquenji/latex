@@ -29,11 +29,17 @@ jobs:
               id: tag
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
-                tag_prefix: ''
+                tag_prefix: 'v'
                 tag_template: dd.mm.yy.i 
 
             - name: Rename PDF
               run: mv main.pdf "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
+
+            - name: Generate Change Log
+              uses: mikepenz/release-changelog-builder-action@v4
+              id: changelog
+              with:
+                configuration: .github/workflows/changelog.json
 
             - name: Create Release
               uses: ncipollo/release-action@v1.14.0
@@ -42,7 +48,6 @@ jobs:
               with:
                 tag: ${{ steps.tag.outputs.next_release_tag }}
                 name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
-                body: |
-                  Triggered by commit ${{ github.sha }}.
+                body: ${{ steps.changelog.outputs.changelog}}
                 artifacts: |
                   "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
