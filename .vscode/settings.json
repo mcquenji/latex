@@ -57,6 +57,7 @@
             ]
         }
     ],
+    "latex-workshop.latex.autoBuild.run": "onSave",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
