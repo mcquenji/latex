@@ -1,0 +1,48 @@
+name: Build and Release PDF on push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    build:
+        name: Build PDF
+        runs-on: ubuntu-latest
+        container: mcquenji/texlive
+
+        env:
+            PDF_NAME: "${{github.repository_owner}} ${{ github.event.repository.name}}" # The name of the compiled PDF file (without the .pdf extension) when a release is created
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Compile Document
+              id: compile
+              run: |
+                pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+                makeglossaries main
+                pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+                pdflatex --shell-escape -interaction=nonstopmode -halt-on-error main.tex
+        
+            - uses: amitsingh-007/next-release-tag@8fab8fd559ffb987e33cf9c3761c219f900d9854
+              id: tag
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                tag_prefix: ''
+                tag_template: dd.mm.yy.i 
+
+            - name: Rename PDF
+              run: mv main.pdf "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
+
+            - name: Create Release
+              uses: ncipollo/release-action@v1.14.0
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag: ${{ steps.tag.outputs.next_release_tag }}
+                name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
+                body: |
+                  Triggered by commit ${{ github.sha }}.
+                artifacts: |
+                  "${{env.PDF_NAME}} v${{ steps.tag.outputs.next_release_tag }}.pdf"
