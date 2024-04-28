@@ -40,7 +40,7 @@ jobs:
             - name: Initialize Variables
               id: vars
               run: |
-                echo 'versioned-pdf-name="${{ env.PDF_NAME }} ${{ steps.tag.outputs.next_release_tag }}.pdf"' >> $GITHUB_OUTPUT
+                echo "versioned-pdf-name=${{ env.PDF_NAME }} ${{ steps.tag.outputs.next_release_tag }}.pdf" >> $GITHUB_OUTPUT
 
             - name: Rename PDF
               run: mv main.pdf "${{ steps.vars.outputs.versioned-pdf-name }}"
