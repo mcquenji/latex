@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Variables
+      - name: Initialize Variables
         id: vars
         run: |
           echo "artifact-name=preview#${{ github.event.pull_request.number }}.$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
