@@ -21,6 +21,7 @@ jobs:
 
             - run: git config --global --add safe.directory '*'
 
+
             - name: Compile Document
               id: compile
               run: |
@@ -35,9 +36,14 @@ jobs:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
                 tag_prefix: 'v'
                 tag_template: dd.mm.yy.i 
+            
+            - name: Setup Variables
+              id: vars
+              run: |
+                echo "versioned-pdf-name=${{ env.PDF_NAME }} ${{ steps.tag.outputs.next_release_tag }}.pdf" >> $GITHUB_ENV
 
             - name: Rename PDF
-              run: mv main.pdf "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
+              run: mv main.pdf "${{ steps.vars.outputs.versioned-pdf-name }}"
 
             - name: Generate Change Log
               uses: mikepenz/release-changelog-builder-action@v4
@@ -54,5 +60,12 @@ jobs:
               with:
                 tag: ${{ steps.tag.outputs.next_release_tag }}
                 name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
-                body: ${{ steps.changelog.outputs.changelog}}
-                artifacts: "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
+                body: |
+                  [Download PDF](https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.next_release_tag }}/${{ steps.vars.outputs.versioned-pdf-name }})
+
+                  ---
+
+                  ${{ steps.changelog.outputs.changelog}}
+
+                  **Full changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.tag.outputs.previous_release_tag }}...${{ steps.tag.outputs.next_release_tag }}
+                artifacts: "${{ steps.vars.outputs.versioned-pdf-name }}"
