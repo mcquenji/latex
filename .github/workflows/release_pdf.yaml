@@ -54,5 +54,4 @@ jobs:
                 tag: ${{ steps.tag.outputs.next_release_tag }}
                 name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
                 body: ${{ steps.changelog.outputs.changelog}}
-                artifacts: |
-                  "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
+                artifacts: "${{env.PDF_NAME}} ${{ steps.tag.outputs.next_release_tag }}.pdf"
