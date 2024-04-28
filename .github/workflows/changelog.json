@@ -28,7 +28,7 @@
         }
     ],
     "sort": "ASC",
-    "template": "- #{{ADDITIONS}} lines added\n- **#{{DELETIONS}}** lines removed\n- **#{{CHANGES}}** total lines changed\n- **#{{CHANGED_FILES}}** files changed\n- **#{{COMMITS}}** new commits\n- **#{{OPEN_COUNT}}** open pull requests\n\n${{CHANGELOG}}\n\n<details>\n<summary><b>Uncategorized (#{{UNCATEGORIZED_COUNT}})</b></summary>\n\n${{UNCATEGORIZED}}\n</details>\n\n",
+    "template": "- **#{{ADDITIONS}}** lines added\n- **#{{DELETIONS}}** lines removed\n- **#{{CHANGES}}** total lines changed\n- **#{{CHANGED_FILES}}** files changed\n- **#{{COMMITS}}** new commits\n- **#{{OPEN_COUNT}}** open pull requests\n\n${{CHANGELOG}}\n\n<details>\n<summary><b>Uncategorized (#{{UNCATEGORIZED_COUNT}})</b></summary>\n\n${{UNCATEGORIZED}}\n</details>\n\n",
     "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}",
     "empty_template": "- no changes",
     "max_tags_to_fetch": 200,

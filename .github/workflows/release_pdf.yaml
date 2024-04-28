@@ -40,7 +40,11 @@ jobs:
             - name: Initialize Variables
               id: vars
               run: |
-                echo "versioned-pdf-name=${{ env.PDF_NAME }} ${{ steps.tag.outputs.next_release_tag }}.pdf" >> $GITHUB_OUTPUT
+                VERSIONED_PDF_NAME="${{ env.PDF_NAME }} ${{ steps.tag.outputs.next_release_tag }}.pdf"
+                SANITIZED_PDF_NAME=$(echo $VERSIONED_PDF_NAME | tr ' ' '.')
+
+                echo "versioned-pdf-name=$VERSIONED_PDF_NAME" >> $GITHUB_OUTPUT
+                echo "sanitized-versioned-pdf-name=$SANITIZED_PDF_NAME" >> $GITHUB_OUTPUT
 
             - name: Rename PDF
               run: mv main.pdf "${{ steps.vars.outputs.versioned-pdf-name }}"
@@ -61,9 +65,7 @@ jobs:
                 tag: ${{ steps.tag.outputs.next_release_tag }}
                 name: PDF Build ${{ steps.tag.outputs.next_release_tag }}
                 body: |
-                  [Download PDF](https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.next_release_tag }}/${{ steps.vars.outputs.versioned-pdf-name }})
-
-                  ---
+                  [Download PDF](https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.next_release_tag }}/${{ steps.vars.outputs.sanitized-versioned-pdf-name }})
 
                   ${{ steps.changelog.outputs.changelog}}
 
