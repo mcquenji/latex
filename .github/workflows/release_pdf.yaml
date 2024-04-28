@@ -45,6 +45,7 @@ jobs:
               with:
                 configuration: .github/workflows/changelog.json
                 toTag: ${{ github.sha}}
+                fromTag: ${{ steps.tag.outputs.previous_release_tag }}
 
             - name: Create Release
               uses: ncipollo/release-action@v1.14.0
